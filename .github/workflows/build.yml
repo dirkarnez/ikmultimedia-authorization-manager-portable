@@ -1,0 +1,32 @@
+name: portable-release-actions-workflow
+on:
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+      - 'c*' # Push events to matching v*, i.e. v1.0, v20.15.10
+      
+jobs:
+  build:
+    name: Create Release
+    runs-on: windows-2019
+    env:
+      targetZip: sbcl-portable-${{ github.ref_name }}.zip
+    steps:
+      - name: installer
+        shell: cmd
+        run: |
+          curl https://download.ikmultimedia.com/plugins/AuthorizationManager/Authorization_Manager_Windows_(1.0.26B).zip -L -J --output installer.zip
+          
+      - name: innoextract 
+        shell: cmd
+        run: | 
+          curl https://github.com/dscharrer/innoextract/releases/download/1.9/innoextract-1.9-windows.zip -L --output innoextract-1.9-windows.zip &&^
+          7z.exe x innoextract-1.9-windows.zip
+          
+      - shell: cmd
+        run: |
+          cd "Authorization Manager (1.0.26)" &&^
+          innoextract.exe  Installer Authorization Manager.exe
+        
+          

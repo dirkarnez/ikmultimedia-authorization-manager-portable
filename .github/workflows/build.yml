@@ -9,9 +9,9 @@ on:
 jobs:
   build:
     name: Create Release
-    runs-on: windows-2019
+    runs-on: windows-latest
     env:
-      targetZip: sbcl-portable-${{ github.ref_name }}.zip
+      targetZip: ikmultimedia-authorization-manager-portable-${{ github.ref_name }}.zip
     steps:
       - name: installer
         shell: cmd
@@ -27,6 +27,6 @@ jobs:
       - shell: cmd
         run: |
           cd "Authorization Manager (1.0.26)" &&^
-          innoextract.exe  Installer Authorization Manager.exe
+          innoextract.exe "Installer Authorization Manager.exe"
         
           

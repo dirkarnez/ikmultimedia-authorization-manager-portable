@@ -45,16 +45,21 @@ jobs:
           cd "Authorization Manager (1.0.26)" &&^
           ..\innoextract.exe "Installer Authorization Manager.exe"
           
+      - name: rename
+        shell: cmd
+        run: |
+          rename "Authorization Manager (1.0.26)" "Authorization_Manager"
+          
       - name: Archive Release
         uses: thedoctor0/zip-release@master
         with:
           type: 'zip'
-          directory: "Authorization\ Manager\ (1.0.26)/app"
+          directory: "Authorization_Manager/app"
           filename: "${{ env.targetZip }}"
           
       - name: Release prebuilt
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "Authorization\ Manager\ (1.0.26)/app/${{ env.targetZip }}"
+          artifacts: "Authorization_Manager/app/${{ env.targetZip }}"
           allowUpdates: true
           token: ${{ secrets.GITHUB_TOKEN }}

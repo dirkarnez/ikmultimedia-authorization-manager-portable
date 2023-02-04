@@ -28,5 +28,17 @@ jobs:
         run: |
           cd "Authorization Manager (1.0.26)" &&^
           innoextract.exe "Installer Authorization Manager.exe"
-        
           
+      - name: Archive Release
+        uses: thedoctor0/zip-release@master
+        with:
+          type: 'zip'
+          directory: "Authorization Manager (1.0.26)/app"
+          filename: "${{ env.targetZip }}"
+          
+      - name: Release prebuilt
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "Authorization Manager (1.0.26)/app/${{ env.targetZip }}"
+          allowUpdates: true
+          token: ${{ secrets.GITHUB_TOKEN }}

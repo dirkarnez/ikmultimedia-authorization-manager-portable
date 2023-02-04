@@ -14,10 +14,25 @@ jobs:
       targetZip: ikmultimedia-authorization-manager-portable-${{ github.ref_name }}.zip
     steps:
       - name: installer
-        shell: cmd
+        shell: bash
         run: |
-          curl https://download.ikmultimedia.com/plugins/AuthorizationManager/Authorization_Manager_Windows_(1.0.26B).zip -L -J --output installer.zip &&^
-          7z.exe x installer.zip
+          curl "https://download.ikmultimedia.com/plugins/AuthorizationManager/Authorization_Manager_Windows_(1.0.26B).zip" ^
+          -H "authority: download.ikmultimedia.com" ^
+          -H "accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" ^
+          -H "accept-language: en-US,en;q=0.9" ^
+          -H "cache-control: no-cache" ^
+          -H "pragma: no-cache" ^
+          -H "referer: https://www.ikmultimedia.com/" ^
+          -H "sec-ch-ua: ^\^"Chromium^\^";v=^\^"107^\^", ^\^"Not=A?Brand^\^";v=^\^"24^\^"" ^
+          -H "sec-ch-ua-mobile: ?0" ^
+          -H "sec-ch-ua-platform: ^\^"Windows^\^"" ^
+          -H "sec-fetch-dest: document" ^
+          -H "sec-fetch-mode: navigate" ^
+          -H "sec-fetch-site: same-site" ^
+          -H "sec-fetch-user: ?1" ^
+          -H "upgrade-insecure-requests: 1" ^
+          -H "user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36" ^
+          --compressed -L --output installer.zip && 7z.exe x installer.zip
           
       - name: innoextract 
         shell: cmd
